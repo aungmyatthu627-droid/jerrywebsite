@@ -2,25 +2,25 @@
 <html lang="my">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Jerry's webpage</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* iOS Safari မှာ အောက်ဆွဲချရင် bounce ဖြစ်ပြီး scroll ပတ်တာကို ကာကွယ်ရန် */
+            -webkit-overflow-scrolling: touch;
         }
 
-        body {
+        body, html {
             background-color: #020205; 
             overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: fixed; /* iOS browser bar တွေ ရွေ့ပြီး layout မပျက်စေရန် */
         }
 
-        
         #webgl-canvas {
             position: absolute;
             top: 0;
@@ -28,10 +28,10 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            cursor: pointer;
+            display: block;
         }
 
-        
+        /* Supernova Flash scale ကို mobile ဖုန်းတွေမှာလည်း အုပ်မိအောင် scale တင်ထားသည် */
         .supernova-flash {
             position: absolute;
             top: 50%;
@@ -44,16 +44,14 @@
             opacity: 0;
             z-index: 999;
             pointer-events: none; 
-            transition: transform 1.2s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.8s ease;
+            transition: transform 1.5s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.8s ease;
         }
 
-        
         .supernova-flash.active {
-            transform: translate(-50%, -50%) scale(300); 
+            transform: translate(-50%, -50%) scale(500); /* ပိုကြီးမားသော scale သို့ ပြောင်းလဲထားသည် */
             opacity: 1;
         }
 
-      
         #svg-source {
             display: none;
         }
@@ -62,7 +60,6 @@
 <body>
 
     <canvas id="webgl-canvas"></canvas>
-
     <div class="supernova-flash" id="flash"></div>
 
     <svg id="svg-source" viewBox="0 0 100 100">
@@ -75,13 +72,26 @@
     <script>
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl-canvas'), antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.position.z = 70;
+        
+        // ဖုန်း display တွေမှာ ဝါးမသွားဘဲ ကြည်လင်ပြတ်သားနေစေရန် pixel ratio သတ်မှတ်ခြင်း
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // ဖုန်း screen အကျယ်အဝန်းအလိုက် ကင်မရာတည်နေရာ (Z-axis) ကို တွက်ချက်ခြင်း
+        function adjustCamera() {
+            if (window.innerWidth < 480) {
+                camera.position.z = 100; // Screen သေးသော ဖုန်းများအတွက် particle စုစုလေး ဖြစ်နေစေရန် အဝေးသို့ ရွှေ့ခြင်း
+            } else if (window.innerWidth < 768) {
+                camera.position.z = 85;
+            } else {
+                camera.position.z = 70; // Desktop အတွက် မူလအတိုင်း
+            }
+        }
+        adjustCamera();
 
         const flash = document.getElementById('flash');
-        
-     
         const targetWebpage = "home.html"; 
         const textureLoader = new THREE.TextureLoader();
         const imageUrls = [
@@ -100,12 +110,9 @@
         const positions = [];
         const particles = [];
 
-        // GSAP Timeline (ပုံမှန်အချိန်မှာ ပတ်မောင်းနေမယ်)
         const tl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 1.5 });
-        
-        let isWarping = false; // နှိပ်လိုက်ပြီး Warp Effect ဖြစ်နေတဲ့ အခြေအနေလား သိဖို့
+        let isWarping = false; 
 
-        // ၁။ For Loop ဖြင့် 3D Vector ပြောင်းလဲပြီး Random ဖြန့်ခြင်း
         for (let i = 0; i < length; i += 0.2) {
             const point = path.getPointAtLength(i);
             
@@ -135,16 +142,16 @@
 
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
 
-        // =======================================================
-        // 🌟 [အစက်တွေနေရာမှာ ပုံဝင်အောင် Material ပြောင်းလိုက်တာပါ] 🌟
-        // =======================================================
+        // ဖုန်းပေါ်တွင် သင့်တော်သောအစက်အရွယ်အစားရစေရန် size ထိန်းညှိခြင်း
+        const particleSize = window.innerWidth < 480 ? 1.8 : 2.5;
+
         const material = new THREE.PointsMaterial({
-            map: textures[0], // ပထမဆုံးပုံ (photo1.jpg) ကို အခြေခံ Texture အဖြစ်သုံးခြင်း
-            size: 2.5,        // ပုံတွေသေချာမြင်ရအောင် size ကို ၂.၅ အထိ တင်ပေးထားပါတယ်
+            map: textures[0], 
+            size: particleSize,        
             transparent: true,
             opacity: 0.9,
             blending: THREE.AdditiveBlending,
-            depthWrite: false // ပုံတွေတစ်ခုနဲ့တစ်ခုထပ်ရင် အမည်းကွက်မပေါ်အောင် ကာကွယ်ခြင်း
+            depthWrite: false 
         });
 
         const particleSystem = new THREE.Points(geometry, material);
@@ -161,7 +168,6 @@
             }
         }
 
-        // ၂။ Render Loop (အမြဲတမ်း ပတ်မောင်းနေမယ့်စနစ်)
         function animate() {
             requestAnimationFrame(animate);
             if (!isWarping) {
@@ -171,29 +177,32 @@
         }
         animate();
 
-        // ၃။ Warp Speed Effect + Supernova Flash + Webpage Link Trigger
+        // Android နှင့် iOS Touch triggers များအတွက် Event Listener များ ချိတ်ဆက်ခြင်း
         const canvas = document.getElementById('webgl-canvas');
         canvas.addEventListener('click', triggerWarpEffect);
+        canvas.addEventListener('touchstart', (e) => {
+            // zoom သို့မဟုတ် browser default double-tap prevent လုပ်ရန်
+            if (e.touches.length === 1) {
+                triggerWarpEffect();
+            }
+        }, { passive: true });
 
         function triggerWarpEffect() {
-            if (isWarping) return; // တစ်ခါနှိပ်ပြီးရင် ထပ်နှိပ်မရအောင် ထိန်းတာပါ
+            if (isWarping) return; 
             isWarping = true;
             
-            // ၁။ GSAP Animations အားလုံးကို ရပ်ပစ်ခြင်း
             tl.kill();
 
-            // ၂။ ပုံမှုန်အားလုံးကို အလယ်ဗဟို ($0,0,0$) ထဲ အရှိန်အဟုန်ပြင်းပြင်း စုပ်ယူသွားခြင်း
             const posArray = geometry.attributes.position.array;
             
             particles.forEach((pObj, i) => {
                 const idx = i * 3;
                 
-                // Hyperspace Warp Speed အတွက် အလယ်ဗဟို $z$-axis အနောက်ဘက်ထဲ စုပ်ယူခြင်း
                 gsap.to(pObj, {
                     x: 0,
                     y: 0,
-                    z: -200, // <--- စုပ်ယူမယ့် အနက်
-                    duration: gsap.utils.random(0.8, 1.2), // မြန်မြန်ဆန်ဆန် ပြီးမြောက်စေခြင်း
+                    z: -200, 
+                    duration: gsap.utils.random(0.8, 1.2), 
                     ease: "power4.in",
                     onUpdate: function() {
                         posArray[idx] = pObj.x;
@@ -204,11 +213,9 @@
                 });
             });
 
-            // ၃။ ၁ စက္ကန့်အတွင်း ပေါက်ကွဲထွက်မယ့် Flash အလင်းတန်းကြီး ပေါ်လာမယ်
             setTimeout(() => {
                 flash.classList.add('active');
                 
-                // အလင်းထွက်ပြီး ခဏနေရင် Webpage အသစ်သို့ ရွှေ့သွားမယ်
                 setTimeout(() => {
                     window.location.href = targetWebpage;
                 }, 1000);
@@ -216,10 +223,13 @@
             }, 800);
         }
 
+        // Screen Size အပြောင်းအလဲဖြစ်တိုင်း Auto Scale ပြန်လုပ်ရန်
         window.addEventListener('resize', () => {
+            adjustCamera();
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
     </script>
 </body>
