@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerry's webpage</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px; /* ဖုန်းမျက်နှာပြင်အသေးတွေမှာ ဘေးဘောင်လေးတွေ မကပ်သွားအောင် ထိန်းပေးပါတယ် */
+            background-color: #f7f5f0; 
+            font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .poetry-container {
+            background-color: #ffffff;
+            padding: 40px 30px; /* ဖုန်းမှာကြည့်ရင် အရမ်းကျပ်မနေအောင် padding လေး ညှိထားပါတယ် */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            width: 100%; 
+            box-sizing: border-box; 
+            text-align: center; /* ခေါင်းစဉ်ရော စာသားပါ အားလုံး အလယ်ဗဟိုကျစေပါတယ် */
+            border: 1px solid #e6e1d6;
+            
+            /* ခလုတ်ကို အောက်ဆုံးမှာ သေသပ်စွာ နေရာချရန် Flex သုံးခြင်း */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .poetry-title {
+            font-size: 22px; 
+            color: #3e3835;
+            margin-bottom: 8px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .poetry-author {
+            font-size: 14px;
+            color: #8c827b;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .poetry-body {
+            font-size: 16px; 
+            color: #4a433f;
+            line-height: 1.9;
+            text-align: center; /* စာသားအားလုံးကို အလယ်ဗဟိုမှာပဲ စနစ်တကျ တန်းနေစေပါတယ် */
+        }
+
+        /* စာပိုဒ်တစ်ခုချင်းစီကို အလယ်မှာပဲ စနစ်တကျ ခွဲပေးထားခြင်း */
+        .poetry-body p {
+            margin: 0 0 1.8em 0; 
+        }
+        
+        .poetry-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .divider {
+            width: 50px;
+            height: 2px;
+            background-color: #c2b6a7;
+            margin: 0 auto 25px auto;
+        }
+
+        /* Home Page ပြန်သွားရန် ခလုတ်အသစ်၏ ပုံစံ */
+        .home-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 24px;
+            background-color: #3e3835; /* ခေါင်းစဉ်အရောင်အတိုင်း သုံးထားလို့ Theme နဲ့ လိုက်ဖက်ပါတယ် */
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .home-btn:hover {
+            background-color: #5c534f; /* Mouse တင်လိုက်ရင် အရောင်ပြောင်းလဲမှု ပေးခြင်း */
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poetry-container">
+        <div class="poetry-title">ကောင်းကင်ကြီးကိုမော့ကြည့်လိုက်တဲ့အခါ...</div>
+        
+        <div class="poetry-author">-ပိစိလေး-</div>
+        
+        <div class="divider"></div>
+
+        <div class="poetry-body">
+            <p>ကောင်းကင်ကြီးကို မော့မကြည့်ဖြစ်တဲ့ နေ့ရက်တွေမှာတောင် တိမ်ကလေးတွေက ကောင်းကင်ယံမှာ အမြဲတမ်း ရှိနေပေးခဲ့တာပါ။ အဝေးကနေ တိတ်တဆိတ် စောင့်ရှောက်ပေးရတဲ့ အချစ်မျိုးပေါ့။ ကိုယ့်မျက်စိရှေ့မှာ အမြဲမရှိနေရင်တောင်၊ အဝေးတစ်နေရာကနေ တစ်ဖက်လူအတွက် စေတနာတွေ၊ မေတ္တာတွေနဲ့ အမြဲတမ်း တည်ရှိနေပေးခြင်းကို အချစ်လို့ သူတို့ ဖွင့်ဆိုကြပါလိမ့်မယ်။
+
+                ပြီးတော့... တကယ်ပဲ နှလုံးသားချင်း ထိစပ်ပြီး ချစ်မိသွားတဲ့အခါ လောကကြီးမှာ မပြောင်းလဲနိုင်တဲ့ အမှန်တရားတစ်ခု ရှိလာတတ်ပြန်တယ်။ အဲဒါကတော့ ကိုယ်ချစ်ရတဲ့သူကလွဲရင်... ကျန်တဲ့ ဘယ်မိန်းကလေးက ဘယ်လောက်ပဲ တောက်ပလှပနေပါစေ၊ နှလုံးသားက ဘယ်တော့မှ ယိမ်းယိုင်ပြီး ရင်မခုန်တော့တာပါပဲ။
+
+                လောကကြီးမှာ ပန်းတွေအများကြီး ပွင့်နေတတ်တာ သဘာဝပါ။ အချို့ပန်းတွေက ပိုပြီး အရောင်အသွေး စုံချင်စုံမယ်၊ ပိုပြီး မွှေးပျံ့ချင် မွှေးပျံ့လိမ့်မယ်။ ဒါပေမဲ့ ကိုယ့်ကမ္ဘာထဲကို သူဝင်လာပြီးတဲ့နောက်မှာတော့... မျက်စိထဲမှာရော နှလုံးသားထဲမှာပါ သူ့တစ်ယောက်တည်းကသာ အလှပဆုံး ပန်းတစ်ပွင့် ဖြစ်လာခဲ့ရတယ်။
+
+                ဒါဟာ တခြားသူတွေ မလှလို့ မဟုတ်ပါဘူး။ ကိုယ့်နှလုံးသားရဲ့ သော့ချိတ်နဲ့ ဆွဲအားအားလုံးကို သူ့ထံမှာပဲ အပြီးအပိုင် ပုံအပ်ထားခဲ့လို့ပါ။ သူများတွေ ဘယ်လောက်ပဲ စွဲမက်စရာကောင်းပါစေ၊ ကိုယ့်အတွက်တော့ အနားမှာရှိတဲ့ သူလေးရဲ့ ရိုးရှင်းတဲ့ အပြုံးတစ်ချက်၊ သူ့ရဲ့ အသံနေအသံထားလေးကသာ ရင်ခုန်သံကို စိုးမိုးနိုင်စွမ်း ရှိပါတယ်။
+
+                တကယ်ချစ်မိတဲ့အခါ 'အလှအပ' ဆိုတာ မျက်စိနဲ့ကြည့်ရတဲ့ အရာမဟုတ်တော့ဘဲ နှလုံးသားနဲ့ ခံစားရတဲ့အရာ ဖြစ်သွားတယ်။ ဒါကြောင့် လောကကြီးရဲ့ ဘယ်လိုဆွဲဆောင်မှုမျိုးကမှ သစ္စာတရားကို မဖျက်ဆီးနိုင်သလို ဘယ်သူတွေ ဘယ်လောက်ပဲ လှပနေပါစေ... ကိုယ့်နှလုံးသားရဲ့ အရှင်သခင်မလေးကတော့ သူတစ်ယောက်တည်းသာ ဖြစ်နေပါလိမ့်မယ်။
+
+                စစ်မှန်တဲ့အချစ်ဆိုတာ လူအများကြီးထဲကမှ အလှဆုံးတစ်ယောက်ကို ရွေးချယ်လိုက်တာမျိုး မဟုတ်ပါဘူး။ ကိုယ်ရွေးချယ်လိုက်တဲ့ တစ်ယောက်တည်းကိုပဲ လူအများကြီးထဲမှာ အလှဆုံးအဖြစ်သာ မြင်ယောင်ခံစားမိတာမျိုးပါ။</p>
+        </div>
+        <a href="index.html" class="home-btn">Go Back Home</a>
+    </div>
+
+</body>
+</html>

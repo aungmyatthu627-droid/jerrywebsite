@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerry's webpage</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px; /* ဖုန်းမျက်နှာပြင်အသေးတွေမှာ ဘေးဘောင်လေးတွေ မကပ်သွားအောင် ထိန်းပေးပါတယ် */
+            background-color: #f7f5f0; 
+            font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .poetry-container {
+            background-color: #ffffff;
+            padding: 40px 30px; /* ဖုန်းမှာကြည့်ရင် အရမ်းကျပ်မနေအောင် padding လေး ညှိထားပါတယ် */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            width: 100%; 
+            box-sizing: border-box; 
+            text-align: center; /* ခေါင်းစဉ်ရော စာသားပါ အားလုံး အလယ်ဗဟိုကျစေပါတယ် */
+            border: 1px solid #e6e1d6;
+            
+            /* ခလုတ်ကို အောက်ဆုံးမှာ သေသပ်စွာ နေရာချရန် Flex သုံးခြင်း */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .poetry-title {
+            font-size: 22px; 
+            color: #3e3835;
+            margin-bottom: 8px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .poetry-author {
+            font-size: 14px;
+            color: #8c827b;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .poetry-body {
+            font-size: 16px; 
+            color: #4a433f;
+            line-height: 1.9;
+            text-align: center; /* စာသားအားလုံးကို အလယ်ဗဟိုမှာပဲ စနစ်တကျ တန်းနေစေပါတယ် */
+        }
+
+        /* စာပိုဒ်တစ်ခုချင်းစီကို အလယ်မှာပဲ စနစ်တကျ ခွဲပေးထားခြင်း */
+        .poetry-body p {
+            margin: 0 0 1.8em 0; 
+        }
+        
+        .poetry-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .divider {
+            width: 50px;
+            height: 2px;
+            background-color: #c2b6a7;
+            margin: 0 auto 25px auto;
+        }
+
+        /* Home Page ပြန်သွားရန် ခလုတ်အသစ်၏ ပုံစံ */
+        .home-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 24px;
+            background-color: #3e3835; /* ခေါင်းစဉ်အရောင်အတိုင်း သုံးထားလို့ Theme နဲ့ လိုက်ဖက်ပါတယ် */
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .home-btn:hover {
+            background-color: #5c534f; /* Mouse တင်လိုက်ရင် အရောင်ပြောင်းလဲမှု ပေးခြင်း */
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poetry-container">
+        <div class="poetry-title">ကော်ဖီတစ်ခွက်ဟာ အချစ်ရဲ့ အမှန်တရားအကြောင်းကို တိတ်တဆိတ်နဲ့ လေးနက်စွာ ပြောပြနေတတ်တယ်</div>
+        
+        <div class="poetry-author">-ပိစိလေး-</div>
+        
+        <div class="divider"></div>
+
+        <div class="poetry-body">
+            <p>စတင်ဖျော်စပ်လိုက်ခါစ မနက်ခင်းမှာတော့ ကော်ဖီဟာ အငွေ့တထောင်းထောင်း ထလျက်၊ ပြင်းရှတဲ့ အမွှေးအကြိုင်တွေနဲ့အတူ အရမ်းကို ပူပြင်းဆူပွက်နေလိမ့်မယ်။ 
+            အဲဒီအချိန်မှာ ကြည့်ရတာ ရင်ခုန်စိတ်လှုပ်ရှားစရာ ကောင်းသလို၊ တစ်ဖက်လူကို အပိုင်ရချင်တဲ့ အတ္တတွေ၊ ဇွတ်တရွတ်ဆန်တဲ့ စိတ်အရှိန်အဟုန်တွေနဲ့ ပြည့်နှက်နေတဲ့ 'အချစ်ဦးခေတ်' နဲ့ တူပါတယ်။ 
+            ပူပြင်းလွန်းတဲ့ ကော်ဖီကို သတိမထားဘဲ အတင်းငုံ့သောက်ရင် လျှာအပူလောင်တတ်သလိုပဲ၊ အတ္တတွေ ပြင်းထန်လွန်းတဲ့ ကနဦးအချစ်ဟာလည်း တစ်ခါတလေ တစ်ဦးကိုတစ်ဦး ဒဏ်ရာတွေ ပေးမိတတ်ကြတာ သဘာဝပါ။</p>
+            
+            <p>ဒါပေမဲ့ အချိန်ဆိုတဲ့ အရာက တရွေ့ရွေ့ ကုန်ဆုံးသွားတဲ့အခါ၊ ကော်ဖီခွက်ထဲက ဆူပွက်နေတဲ့ အပူရှိန်တွေဟာ ဖြည်းဖြည်းချင်း လျော့ကျငြိမ်သက်သွားရစမြဲပါ။
+            အဲဒီလို အပူချိန်ကျသွားတာဟာ ကော်ဖီရဲ့ ဖြစ်တည်မှု ပျောက်ကွယ်သွားတာ မဟုတ်သလို၊ ချစ်ခြင်းတရားတွေ သွေးအေးသွားတာလည်း မဟုတ်ပါဘူး။
+            တကယ်တော့... အရှိန်အဟုန်တွေ ငြိမ်းချမ်းသွားတဲ့အခါမှသာ ကော်ဖီရဲ့ ပကတိအရသာစစ်စစ်က ပိုပြီး ပေါ်လွင်လာတာပါ။ 
+            မီးခိုးငွေ့တွေကြားမှာ ကွယ်ပျောက်နေခဲ့တဲ့ ခါးသက်သက်နဲ့ ချိုမြိန်မြိန် အရသာတွေဟာ မျှတသွားပြီး၊ ပိုပြီး သောက်လို့ကောင်းတဲ့၊ ပိုပြီး အရသာလေးနက်တဲ့ အနေအထားကို ရောက်ရှိသွားပါတယ်။</p>
+            
+            <p>အချစ်စစ်ဆိုတာလည်း ဒီလိုပါပဲ။ 
+            ကနဦးက ရှိခဲ့တဲ့ အတ္တတွေ၊ မာနတွေနဲ့ ပူပြင်းတဲ့ စိတ်အလိုတွေဟာ ဘဝရဲ့ အတွေ့အကြုံတွေ၊ နားလည်မှုတွေကြားမှာ လှပစွာ အရည်ပျော်ကျ ငြိမ်းအေးသွားပြီးတဲ့နောက်... 
+            မျက်မှောက်ခေတ်ရဲ့ လောကဓံကို ဘေးချင်းယှဉ်လို့ ညင်သာအေးချမ်းစွာ ရင်ဆိုင်နိုင်တဲ့ 'သံယောဇဉ်စစ်စစ်' အဖြစ် အသွင်ပြောင်းလဲ ရင့်ကျက်သွားခြင်း ဖြစ်ပါတယ်။ 
+            စိတ်လှုပ်ရှားစရာ အပူငွေ့တွေ မရှိတော့ပေမဲ့၊ တစ်ငုံသောက်လိုက်တိုင်း နှလုံးသားကို ထာဝရနွေးထွေးစေမယ့် ကော်ဖီတစ်ခွက်လိုပေါ့။</p>
+        </div>
+        <a href="index.html" class="home-btn">Go Back Home</a>
+    </div>
+
+</body>
+</html>

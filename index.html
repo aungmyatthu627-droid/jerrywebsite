@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nebula Warp & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #000000; /* Space Black */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fullscreen Content Area for motion.html loading */
+        #content-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1;
+            display: none; /* အစပိုင်းမှာ ဖျောက်ထားမည် */
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        /* Green Neon Glow Login Box */
+        .login-card {
+            background-color: #0c0c0c;
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            /* ပုံထဲကအတိုင်း အစိမ်းရောင် Glow Effect */
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.35), 
+                        inset 0 0 15px rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            text-align: center;
+            z-index: 10;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Fade out transition to smoothly hide login page */
+        .login-card.hide {
+            opacity: 0;
+            transform: scale(0.8) translateY(-50px);
+            pointer-events: none;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 35px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 45px 14px 20px;
+            background-color: #121212;
+            border: 1px solid rgba(0, 255, 0, 0.25); /* အစိမ်းရောင် Border */
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .input-group input:focus {
+            border-color: rgba(0, 255, 0, 0.8);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+
+        .input-group .fa-user {
+            color: #8b5cf6; /* ခရမ်းရောင် Icon */
+        }
+
+        .input-group .fa-lock {
+            color: #f97316; /* လိမ္မော်ရောင် Icon */
+        }
+
+        .forgot-pass {
+            color: #a3a3a3;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-pass:hover {
+            color: #00ff00;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            color: #000000;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .login-btn:hover {
+            background-color: #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        }
+
+        /* Error Message (ဟိတ် မှားနေတယ်နော်) */
+        #error-message {
+            color: #ff4b72;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 15px;
+            display: none;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card" id="loginCard">
+        <h2>Login</h2>
+        
+        <form onsubmit="return validateLogin(event)">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" autocomplete="off" required>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+            <br>
+            <a href="#" class="forgot-pass">Forgot password?</a>
+        </form>
+
+        <p id="error-message">ဟိတ် မှားနေတယ်နော်</p>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Golden Brown (Slowed Loop) - Owen Cropper.mp3" type="audio/mpeg">
+    </audio>
+
+    <iframe id="content-frame" src="about:blank"></iframe>
+
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+
+            const userIn = document.getElementById('username').value;
+            const passIn = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-message');
+            const loginCard = document.getElementById('loginCard');
+            const music = document.getElementById('bgMusic');
+            const iframe = document.getElementById('content-frame');
+
+            // မင်းသတ်မှတ်ထားသော Credential များနှင့် တိုက်စစ်ခြင်း
+            if (userIn === 'maythuzar' && passIn === 'May155208') {
+                errorMsg.style.display = 'none';
+
+                // ၁။ Audio Playback စတင်ခြင်း (User က Login နှိပ်လိုက်၍ Browser က တန်းခွင့်ပြုသည်)
+                music.play().catch(err => console.log("Audio play error:", err));
+
+                // ၂။ Login Card ကို Smooth Fade Out Animation ပြုလုပ်ခြင်း
+                loginCard.classList.add('hide');
+
+                // ၃။ motion.html ကို နောက်ကွယ်တွင် load ဆွဲပြီး ညင်သာစွာ ပြသခြင်း
+                setTimeout(() => {
+                    loginCard.style.display = 'none';
+                    iframe.src = 'motion.html';
+                    iframe.style.display = 'block';
+                    
+                    // Fade in effect
+                    setTimeout(() => {
+                        iframe.style.opacity = '1';
+                    }, 50);
+                }, 1000);
+
+            } else {
+                // Password မှားယွင်းပါက Error ပြခြင်း
+                errorMsg.style.display = 'block';
+                errorMsg.style.animation = 'none';
+                errorMsg.offsetHeight; /* trigger reflow */
+                errorMsg.style.animation = null; 
+            }
+            return false;
+        }
+    </script>
+
+</body>
+</html>
